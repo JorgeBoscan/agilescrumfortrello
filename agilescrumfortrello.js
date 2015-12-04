@@ -46,9 +46,13 @@ AST = (function ( A ) {
 		runTimerInterval 	= 5000,
 		runTimerChecksum 	= 0,
 
+		// For storing boards done and total points.
+		currentBoardDone = 0,
+		currentBoardTotal = 0,
+
 		currentListElement 	= false,
-		currentListDone 	= 0,
-		currentListTotal 	= 0,
+		currentListDone		= 0,
+		currentListTotal	= 0,
 
 		currentHeaderElement = false,
 		currentHeaderDone 	= 0,
@@ -224,6 +228,10 @@ AST = (function ( A ) {
 					{
 						currentHeaderDone  = currentHeaderDone + currentCardDone;
 						currentHeaderTotal = currentHeaderTotal + currentCardTotal;
+
+						// Adds to total of done and total points.
+						currentBoardDone += currentCardDone;
+						currentBoardTotal += currentCardTotal;
 					}
 
 					// now reset the Card for the next one
@@ -258,6 +266,13 @@ AST = (function ( A ) {
 
 			}); // end loop Lists
 
+			// Adds total of points and time consumed on the board
+			if (currentBoardTotal > 0) {
+				$('.board-header-btn:eq(2)').after('<div class="scrum-board-total board-header-btn board-header-btn-name"><span>Board Points: </span><span class="board-header-btn-text' + ((currentBoardDone == currentBoardTotal) ? ' perfect"' : (currentBoardDone > currentBoardTotal) ? ' overrun"' : '"') +'>' + (( currentBoardDone !== 0) ? ( currentBoardDone.toFixed(storyPointDecimals) + '/') : '' ) + currentBoardTotal.toFixed(storyPointDecimals) + '</span></div>');
+			}
+
+			// Reset board points variables.
+			currentBoardTotal 		= currentBoardDone = 0;
 		}; // _run
 
 
@@ -266,7 +281,7 @@ AST = (function ( A ) {
 		 */
 		var _removeElements = function()
 		{
-			$('.scrum-list-total,.scrum-list-progress,.scrum-card-progress').remove();
+			$('.scrum-board-total,.scrum-list-total,.scrum-list-progress,.scrum-card-progress').remove();
 		};
 
 

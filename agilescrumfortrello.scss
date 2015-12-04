@@ -30,6 +30,14 @@ $border-radius: 3px;
 	font-size: 90%;
 }
 
+.scrum-board-total {
+	span.board-header-btn-text.overrun {
+		color: #ffaaaa;
+	}
+	span.board-header-btn-text.perfect {
+		color: #aaffaa;
+	}
+}
 .scrum-list-total {
 	position: absolute;
 	top: 6px;
